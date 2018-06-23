@@ -4,7 +4,7 @@ export default function ShowAnotherQuoteButton(props) {
 
 	return (
 		<React.Fragment>
-			<button onClick={props.showAnotherQuote}>Show Another</button>
+			<button onClick={props.showAnotherQuote}>SHOW ANOTHER</button>
 		</React.Fragment>
 	)
 }

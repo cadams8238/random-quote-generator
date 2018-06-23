@@ -7,14 +7,32 @@ export default class QuoteGenerator extends React.Component {
 		super(props);
 
 		this.state = {
-			API_URL: 'https://talaikis.com/api/quotes/random/',
+			API_URL_QUOTE: 'https://talaikis.com/api/quotes/random/',
 			quote: '',
-			author: ''
+			author: '',
+
+			API_URL_IMG: 'https://picsum.photos/',
+			imgSrc: ''
 		}
+		this.windowHeight= window.innerHeight;
+		this.windowWidth= window.innerWidth;
 	}
 
 	componentDidMount() {
-		fetch(this.state.API_URL)
+		//for image
+		fetch(`${this.state.API_URL_IMG}/${this.windowWidth}/${this.windowHeight}/?random`)
+			.then(results => results.arrayBuffer())
+			.then(buffer => {
+				let base64Flag = 'data:image/jpeg;base64,';
+				let imageStr = this.arrayBufferToBase64(buffer);
+
+				this.setState({
+					imgSrc: base64Flag + imageStr
+				})
+			});
+
+		//for quote
+		fetch(this.state.API_URL_QUOTE)
 			.then(result => {
 				if(result) {
 					return result.json();
@@ -23,19 +41,26 @@ export default class QuoteGenerator extends React.Component {
 				}
 			})
 			.then(jsonResult => {
-				// console.log(jsonResult);
 				this.setState({
 					quote: jsonResult.quote,
 					author: jsonResult.author
 				})
-				// console.log(this.state.quote, this.state.author);
 			});
+	}
+
+	arrayBufferToBase64(buffer) {
+		let binary = '';
+		let bytes = [].slice.call(new Uint8Array(buffer));
+
+		bytes.forEach(b => binary += String.fromCharCode(b));
+
+		return window.btoa(binary);
 	}
 
 	render() {
 		return (
-			<div>
-				<BackgroundImage />
+			<div className="background">
+				<img src={this.state.imgSrc} />
 				<blockquote>
 					<q>{this.state.quote}!</q>
 					<p>-{this.state.author}</p>
