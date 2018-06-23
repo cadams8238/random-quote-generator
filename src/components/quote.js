@@ -1,5 +1,6 @@
 import React from 'react';
 import ShowAnotherQuoteButton from './button';
+import BackgroundImage from './backgroundImage';
 
 export default class QuoteGenerator extends React.Component {
 	constructor(props) {
@@ -34,11 +35,12 @@ export default class QuoteGenerator extends React.Component {
 	render() {
 		return (
 			<div>
+				<BackgroundImage />
 				<blockquote>
 					<q>{this.state.quote}!</q>
 					<p>-{this.state.author}</p>
 				</blockquote>
-				<ShowAnotherQuoteButton showAnother={() => this.componentDidMount()} />
+				<ShowAnotherQuoteButton showAnotherQuote={() => this.componentDidMount()} />
 			</div>
 		);
 	}
