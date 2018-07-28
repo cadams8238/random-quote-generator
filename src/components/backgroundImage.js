@@ -32,11 +32,9 @@ export default class BackgroundImage extends React.Component {
 
 		return window.btoa(binary);
 	}
-			
+
 
 	render() {
-			// console.log(this.windowWidth, this.windowHeight);
-			// console.log(this.componentDidMount());
 		return (
 			<React.Fragment>
 				<img src={this.state.imgSrc} />
